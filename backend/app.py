@@ -14,23 +14,10 @@ collection = db.test
 
 @application.route('/')
 def home():
-    # db = client.music_lib
-    # collection = db.test
-    # print(db)
-    # print(collection)
     print(db.list_collection_names())
-    # print(collection.find_one())
     return 'music lib home'
-
-
-
-# GET songs
 #Update a song (various updates required)
 #delete a song
-
-
-# @application.route('/adduser',methods = ['POST'])
-# def addUser():
 @application.route('/songs',methods = ['GET','POST'])
 def songs():
     if request.method=='GET':
@@ -47,6 +34,16 @@ def songs():
                     },200 
         except:
                 return {"message": "An error occurred while getting songs"},400
+    if request.method=='POST':
+        try:
+            content = request.get_json()
+            
+            song={f"name":content['name'],"userRating":0,"genres":[]}
+            print(song)
+            collection.insert_one(song)
+            return {"message": "successfully added song"},200 
+        except:
+                return {"message": "An error occurred while adding new song"},400
 
 if __name__ == '__main__':
     application.run(port=5000,debug=True)

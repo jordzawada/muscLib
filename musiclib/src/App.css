@@ -58,6 +58,7 @@
 .songCardDiv{
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 .songCard{
   background-color: blue;
@@ -65,4 +66,18 @@
   width: 300px;
   margin: 5px;
   border-radius: 10px;
+}
+
+#idAddButton{
+  background-color: chocolate;
+  margin: 10px;
+  height: 50px;
+  width: 100px;
+}
+
+
+#idAddBox{
+  width: 100px;
+  height: 30px;
+  background-color: blanchedalmond;
 }

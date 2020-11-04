@@ -15,7 +15,7 @@ class songCard extends React.Component {
     render() {
       return (
         <div className="songCard" onClick={this.onPress}>
-           {this.props.info.name}
+           {this.props.info.name} 
         </div>
       )
     }
