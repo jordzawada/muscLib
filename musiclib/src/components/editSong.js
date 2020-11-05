@@ -169,6 +169,26 @@ class TrackGenres extends React.Component {
     });
   };
 
+  deleteSong=async()=>{
+    let id = this.props.info._id
+    const response = await fetch(url + "songs", {
+      method: "DELETE",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+      referrer: "no-referrer",
+      body: JSON.stringify(id),
+    });
+    const resp = await response.json();
+    console.log(resp.message);
+    this.props.update();
+    this.props.afterDelete()
+  }
+
   saveSong = async () => {
     const data = { data: this.state.addInput, _id: this.props.info._id };
     console.log(data);
@@ -218,6 +238,9 @@ class TrackGenres extends React.Component {
           </div>
           <button id="idAddButton" onClick={this.saveSong}>
             Save
+          </button>
+          <button id="idAddButton" onClick={this.deleteSong}>
+            Delete
           </button>
         </div>
       </div>

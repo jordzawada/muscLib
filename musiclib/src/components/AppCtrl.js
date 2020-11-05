@@ -37,9 +37,13 @@ class AppCtrl extends React.Component {
   selectSong = (e) => {
     // console.log(e._id);
     this.setState({
-      activeSong: <EditSong update={this.getSongsFromDB} makeSongCards={this.makeSongCards} songs={this.state.songs} info={e} />,
+      activeSong: <EditSong afterDelete={this.setSongAfterDelete} update={this.getSongsFromDB} makeSongCards={this.makeSongCards} songs={this.state.songs} info={e} />,
     });
   };
+
+  setSongAfterDelete =()=>{
+    this.setState({activeSong: ""})
+  }
 
   makeSongCards = (songs) => {
     // console.log(songs);

@@ -20,7 +20,7 @@ def home():
     return 'music lib home'
 #Update a song (various updates required)
 #delete a song
-@application.route('/songs',methods = ['GET','POST','PUT'])
+@application.route('/songs',methods = ['GET','POST','PUT','DELETE'])
 def songs():
     if request.method=='GET':
         try:
@@ -60,6 +60,16 @@ def songs():
             return {"message": "successfully updated song"},200 
         except:
                 return {"message": "An error occurred while adding genre to song"},400
+    if request.method=='DELETE':
+        try:
+            content = request.get_json()
+            print(content)
+            objID=ObjectId(content)
+            collection.delete_one({"_id":{"$eq": objID}})
+            
+            return {"message": "successfully deleted song"},200 
+        except:
+            return {"message": "An error occurred while adding genre to song"},400
 if __name__ == '__main__':
     application.run(port=5000,debug=True)
     # application.run(host= '10.0.0.25',debug=True)
