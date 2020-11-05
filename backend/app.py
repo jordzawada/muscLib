@@ -8,7 +8,7 @@ from bson import ObjectId
 
 application = Flask(__name__)
 CORS(application, supports_credentials=True)
-client = MongoClient('mongodb+srv://jordanzawada:1Gasbulb@cluster0.5hn6n.mongodb.net/<dbname>?retryWrites=true&w=majority')
+client = MongoClient('mongodb+srv://:@cluster0.5hn6n.mongodb.net/<dbname>?retryWrites=true&w=majority')
 db = client.music_lib
 collection = db.test
 
