@@ -3,6 +3,7 @@ from flask_cors import CORS
 import json
 # from flask_pymongo import PyMongo
 from pymongo import MongoClient
+from bson import ObjectId
 
 
 application = Flask(__name__)
@@ -18,7 +19,7 @@ def home():
     return 'music lib home'
 #Update a song (various updates required)
 #delete a song
-@application.route('/songs',methods = ['GET','POST'])
+@application.route('/songs',methods = ['GET','POST','PUT'])
 def songs():
     if request.method=='GET':
         try:
@@ -39,12 +40,22 @@ def songs():
             content = request.get_json()
             
             song={f"name":content['name'],"userRating":0,"genres":[]}
-            print(song)
             collection.insert_one(song)
             return {"message": "successfully added song"},200 
         except:
                 return {"message": "An error occurred while adding new song"},400
-
+    if request.method=='PUT':
+        try:
+            content = request.get_json()
+            # print(content['_id'])
+            objID=ObjectId(content['_id'])
+            cursor= collection.find({ "_id":{"$eq": objID}},{ "_id": 0,"name": 0,"userRating":0})
+            for x in cursor:
+                print(x)
+            # print(cursor['genres'])
+            return {"message": "successfully added new genre"},200 
+        except:
+                return {"message": "An error occurred while adding genre to song"},400
 if __name__ == '__main__':
     application.run(port=5000,debug=True)
     # application.run(host= '10.0.0.25',debug=True)

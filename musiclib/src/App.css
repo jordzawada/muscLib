@@ -3,6 +3,7 @@
   text-align: center;
   color: azure;
   background-color: #282c34;
+  height: 900px;
 }
 
 .App-logo {
@@ -59,8 +60,23 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 400px;
 }
+
+.tracksDiv{
+  width: 400px;
+}
+
+.songCardsScroll{
+  overflow-y:scroll;
+  height: 500px;
+  width: 350px;
+}
+
 .songCard{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
   background-color: blue;
   height: 50px;
   width: 300px;
@@ -71,13 +87,46 @@
 #idAddButton{
   background-color: chocolate;
   margin: 10px;
-  height: 50px;
+  height: 35px;
   width: 100px;
 }
 
 
 #idAddBox{
-  width: 100px;
+  width: 200px;
   height: 30px;
   background-color: blanchedalmond;
+  margin: 5px;
+}
+
+.clStars{
+  display: flex;
+  background-color:white;
+  width: 125px;
+  height: 30px;
+  margin: 5px;
+  border-radius: 5px;
+  justify-content: center;
+  align-items: center;
+}
+
+#idStarImg{
+  height: 21px;
+}
+
+.clTracksGenre{
+  display: flex;
+  background-color: blue;
+  width: 200px;
+  height: 75px;
+  margin: 10px;
+  justify-content: left;
+  align-items: center;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+#idGenres{
+  display: flex;
+  flex-direction: column;
 }

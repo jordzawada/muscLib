@@ -2,6 +2,7 @@ import React from "react";
 import SongCard from "./songCard";
 
 import { url } from "../globals";
+import TrackGenres from "./trackGenres";
 
 class AppCtrl extends React.Component {
   constructor() {
@@ -30,11 +31,11 @@ class AppCtrl extends React.Component {
     const resp = await response.json();
     console.log(resp.message);
     this.setState({ songs: resp.songs });
-    // this.makeSongCards(resp.songs);
   };
 
   selectSong = (e) => {
-    this.setState({ activeSong: e });
+    console.log(e._id);
+    this.setState({ activeSong: <TrackGenres info={e} /> });
   };
 
   makeSongCards = (songs) => {
@@ -64,10 +65,11 @@ class AppCtrl extends React.Component {
     this.setState({ addInput: e.target.value });
   };
 
-  addSong=async()=>{
-    const data={name:this.state.addInput}
-    console.log(data);
-    const response = await fetch(url + "songs", {
+  addSong = async () => {
+    const data = { name: this.state.addInput };
+    // console.log(data);
+    if (data === "") {
+      const response = await fetch(url + "songs", {
         method: "POST",
         mode: "cors",
         cache: "no-cache",
@@ -81,7 +83,11 @@ class AppCtrl extends React.Component {
       });
       const resp = await response.json();
       console.log(resp.message);
-  }
+      this.getSongsFromDB();
+    } else {
+        alert('Invalid Name')
+    }
+  };
 
   componentDidMount = () => {
     this.getSongsFromDB();
@@ -102,7 +108,7 @@ class AppCtrl extends React.Component {
           value={this.state.searchInput}
           onChange={this.handleSearchChange}
           type="text"
-          default="Search Title"
+          placeholder="Search Title"
         ></input>
         {/* <button onClick={this.getSongsFromDB} type="button">
           Click Me!
@@ -110,20 +116,23 @@ class AppCtrl extends React.Component {
 
         <div className="clLowerDiv">
           <div className="songCardDiv">
-            Tracks {this.state.displaySongs}
+            Tracks
+            <div className="songCardsScroll"> {this.state.displaySongs}</div>
             <div>
-            Name
-            <input
-              id="idAddBox"
-              value={this.state.addInput}
-              onChange={this.handleAddChange}
-              type="text"
-              default="Add Title"
-            ></input>
-            <button id="idAddButton" onClick={this.addSong}>Add Track </button>
+              Name
+              <input
+                id="idAddBox"
+                value={this.state.addInput}
+                onChange={this.handleAddChange}
+                type="text"
+                default="Add Title"
+              ></input>
+              <button id="idAddButton" onClick={this.addSong}>
+                Add Track{" "}
+              </button>
             </div>
           </div>
-          <div className="tracksDiv"> Active Song: {this.state.activeSong}</div>
+          <div className="tracksDiv"> Tracks Genres: {this.state.activeSong}</div>
         </div>
       </div>
     );
