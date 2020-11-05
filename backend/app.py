@@ -4,11 +4,12 @@ import json
 # from flask_pymongo import PyMongo
 from pymongo import MongoClient
 from bson import ObjectId
+import address from config
 
 
 application = Flask(__name__)
 CORS(application, supports_credentials=True)
-client = MongoClient('mongodb+srv://jordanzawada:1Gasbulb@cluster0.5hn6n.mongodb.net/<dbname>?retryWrites=true&w=majority')
+client = MongoClient(address)
 db = client.music_lib
 collection = db.test
 
