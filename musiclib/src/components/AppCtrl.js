@@ -37,13 +37,21 @@ class AppCtrl extends React.Component {
   selectSong = (e) => {
     // console.log(e._id);
     this.setState({
-      activeSong: <EditSong afterDelete={this.setSongAfterDelete} update={this.getSongsFromDB} makeSongCards={this.makeSongCards} songs={this.state.songs} info={e} />,
+      activeSong: (
+        <EditSong
+          afterDelete={this.setSongAfterDelete}
+          update={this.getSongsFromDB}
+          makeSongCards={this.makeSongCards}
+          songs={this.state.songs}
+          info={e}
+        />
+      ),
     });
   };
 
-  setSongAfterDelete =()=>{
-    this.setState({activeSong: ""})
-  }
+  setSongAfterDelete = () => {
+    this.setState({ activeSong: "" });
+  };
 
   makeSongCards = (songs) => {
     // console.log(songs);
@@ -72,9 +80,9 @@ class AppCtrl extends React.Component {
     this.setState({ addSongView: true });
   };
 
-  addsongVisible=()=>{
+  addsongVisible = () => {
     this.setState({ addSongView: false });
-  }
+  };
 
   componentDidMount = () => {
     this.getSongsFromDB();
@@ -85,6 +93,11 @@ class AppCtrl extends React.Component {
       this.makeSongCards(this.state.songs);
     }
   };
+
+  // refresh=()=>{
+  //   console.log(this.state.songs);
+  //   this.makeSongCards(this.state.songs);
+  // }
 
   render() {
     if (this.state.addSongView === false) {
@@ -100,27 +113,27 @@ class AppCtrl extends React.Component {
           ></input>
           <div className="clLowerDiv">
             <div className="songCardDiv">
+            {/* <button  onClick={this.refresh}>
+                Refresh
+              </button> */}
               Tracks
               <div className="songCardsScroll"> {this.state.displaySongs}</div>
               <button id="idAddButton" onClick={this.addSong}>
                 Add Track{" "}
               </button>
             </div>
-            <div className="tracksDiv">
-              {" "}
-              Edit Song: {this.state.activeSong}
-            </div>
+            <div className="tracksDiv"> Edit Song: {this.state.activeSong}</div>
           </div>
         </div>
       );
-    } 
+    }
     if (this.state.addSongView === true) {
-      return(
+      return (
         <div className="App">
-         add a song
-         <AddSong update={this.getSongsFromDB} visible={this.addsongVisible} />
+          add a song
+          <AddSong update={this.getSongsFromDB} visible={this.addsongVisible} />
         </div>
-      )
+      );
     }
   }
 }

@@ -23,6 +23,10 @@ class songCard extends React.Component {
         this.setState({genres:newGenres})
     }
 
+    // componentDidUpdate=(PP,PS,SS)=>{
+    //   if (PP.info!==)
+    // }
+
     render() {
       return (
         <div className="songCard" onClick={this.onPress}>
