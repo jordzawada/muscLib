@@ -4,7 +4,7 @@ import AppCtrl from './components/AppCtrl';
 function App() {
   return (
     <div className="App">
-      Hello World
+      Hello Music World
       <div>
         <AppCtrl />
         </div>

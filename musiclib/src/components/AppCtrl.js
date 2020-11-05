@@ -1,8 +1,9 @@
 import React from "react";
 import SongCard from "./songCard";
+import AddSong from "./addSong";
 
 import { url } from "../globals";
-import TrackGenres from "./trackGenres";
+import EditSong from "./editSong";
 
 class AppCtrl extends React.Component {
   constructor() {
@@ -11,7 +12,7 @@ class AppCtrl extends React.Component {
       searchInput: "",
       songs: [],
       activeSong: "",
-      addInput: "",
+      addSongView: false,
     };
   }
 
@@ -34,8 +35,10 @@ class AppCtrl extends React.Component {
   };
 
   selectSong = (e) => {
-    console.log(e._id);
-    this.setState({ activeSong: <TrackGenres info={e} /> });
+    // console.log(e._id);
+    this.setState({
+      activeSong: <EditSong update={this.getSongsFromDB} makeSongCards={this.makeSongCards} songs={this.state.songs} info={e} />,
+    });
   };
 
   makeSongCards = (songs) => {
@@ -61,33 +64,13 @@ class AppCtrl extends React.Component {
     this.makeSongCards(tempArr);
   };
 
-  handleAddChange = (e) => {
-    this.setState({ addInput: e.target.value });
+  addSong = () => {
+    this.setState({ addSongView: true });
   };
 
-  addSong = async () => {
-    const data = { name: this.state.addInput };
-    // console.log(data);
-    if (data === "") {
-      const response = await fetch(url + "songs", {
-        method: "POST",
-        mode: "cors",
-        cache: "no-cache",
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        redirect: "follow",
-        referrer: "no-referrer",
-        body: JSON.stringify(data),
-      });
-      const resp = await response.json();
-      console.log(resp.message);
-      this.getSongsFromDB();
-    } else {
-        alert('Invalid Name')
-    }
-  };
+  addsongVisible=()=>{
+    this.setState({ addSongView: false });
+  }
 
   componentDidMount = () => {
     this.getSongsFromDB();
@@ -100,42 +83,41 @@ class AppCtrl extends React.Component {
   };
 
   render() {
-    return (
-      <div className="App">
-        <br />
-        <input
-          id="idSearchBox"
-          value={this.state.searchInput}
-          onChange={this.handleSearchChange}
-          type="text"
-          placeholder="Search Title"
-        ></input>
-        {/* <button onClick={this.getSongsFromDB} type="button">
-          Click Me!
-        </button> */}
-
-        <div className="clLowerDiv">
-          <div className="songCardDiv">
-            Tracks
-            <div className="songCardsScroll"> {this.state.displaySongs}</div>
-            <div>
-              Name
-              <input
-                id="idAddBox"
-                value={this.state.addInput}
-                onChange={this.handleAddChange}
-                type="text"
-                default="Add Title"
-              ></input>
+    if (this.state.addSongView === false) {
+      return (
+        <div className="App">
+          <br />
+          <input
+            id="idSearchBox"
+            value={this.state.searchInput}
+            onChange={this.handleSearchChange}
+            type="text"
+            placeholder="Search Title"
+          ></input>
+          <div className="clLowerDiv">
+            <div className="songCardDiv">
+              Tracks
+              <div className="songCardsScroll"> {this.state.displaySongs}</div>
               <button id="idAddButton" onClick={this.addSong}>
                 Add Track{" "}
               </button>
             </div>
+            <div className="tracksDiv">
+              {" "}
+              Edit Song: {this.state.activeSong}
+            </div>
           </div>
-          <div className="tracksDiv"> Tracks Genres: {this.state.activeSong}</div>
         </div>
-      </div>
-    );
+      );
+    } 
+    if (this.state.addSongView === true) {
+      return(
+        <div className="App">
+         add a song
+         <AddSong update={this.getSongsFromDB} visible={this.addsongVisible} />
+        </div>
+      )
+    }
   }
 }
 
